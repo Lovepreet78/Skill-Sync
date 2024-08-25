@@ -58,7 +58,19 @@ p {
 	width: 350px;
 	max-width: 100%;
 	text-align: center;
+
+
+	
 }
+.card-container p {
+    max-height: 4.8em; /* Adjust height as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
 .allProfileContainer{
     background-color: #fff;
 	font-family: Montserrat, sans-serif;
@@ -110,7 +122,13 @@ button.primary.ghost {
 	text-align: left;
 	padding: 15px;
 	margin-top: 30px;
+	
+	max-height: 80px; /* Adjust based on the number of items you want to show */
+  	overflow: hidden;
+  	position: relative;
+	border-radius: 8px;
 }
+
 
 .skills ul {
 	list-style-type: none;

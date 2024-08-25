@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile</title>
+    <link rel="stylesheet" href="profilereg.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Vertical Progress Sidebar -->
+        <div class="sidebar">
+            <div class="progress-nav">
+                <div class="nav-step nav-step-active">
+                    <span>1</span>
+                    <p>Personal Info</p>
+                </div>
+                <div class="nav-step">
+                    <span>2</span>
+                    <p>Education</p>
+                </div>
+                <div class="nav-step">
+                    <span>3</span>
+                    <p>Skills & Bio</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-container">
+            <div class="form-header">
+                <h1>Complete Your Profile</h1>
+                <p>Create a detailed profile to connect with others!</p>
+            </div>
+
+            <form id="profileForm" action="/submitProfile" method="POST" enctype="multipart/form-data">
+                <!-- Section 1: Personal Info -->
+                <div class="form-section form-section-active">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" id="phone" name="phone" required>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div> -->
+                    <button type="button" class="btn-next">Next</button>
+                </div>
+
+                <!-- Section 2: Education & Profession -->
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="major">Major:</label>
+                        <input type="text" id="major" name="major" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profession">Profession:</label>
+                        <input type="text" id="profession" name="profession" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="university">University:</label>
+                        <input type="text" id="university" name="university" required>
+                    </div>
+                    <button type="button" class="btn-prev">Previous</button>
+                    <button type="button" class="btn-next">Next</button>
+                </div>
+
+                <!-- Section 3: Skills, Bio, and Availability -->
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="bio">Bio:</label>
+                        <textarea id="bio" name="bio" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Skills (enter and press Enter):</label>
+                        <input type="text" id="skillsInput" placeholder="Add a skill...">
+                        <div class="skills-container" id="skillsContainer"></div>
+                        <input type="hidden" id="skills" name="skills">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="availability">Available to Join:</label>
+                        <select id="availability" name="isAvailableToJoin" required>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profilePic">Profile Picture:</label>
+                        <input type="file" id="profilePic" name="profilePic" accept="image/*">
+                    </div>
+
+                    <button type="button" class="btn-prev">Previous</button>
+                    <button type="submit" class="submit-btn">Submit Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="profilereg.js"></script>
+</body>
+</html>

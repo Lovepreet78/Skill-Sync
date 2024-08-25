@@ -1,0 +1,177 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #73a5ff, #5477f5);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container and form layout */
+.main-container {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar with vertical progress bar */
+.sidebar {
+    width: 30%;
+    background: #1a73e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.progress-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-step {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+.nav-step span {
+    display: inline-block;
+    background: #fff;
+    color: #1a73e8;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.nav-step p {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.nav-step-active span {
+    background: #fbc02d;
+    color: #1a73e8;
+}
+
+/* Form Container */
+.form-container {
+    width: 70%;
+    padding: 40px;
+    background: #f9f9f9;
+    position: relative;
+}
+
+.form-header h1 {
+    font-size: 32px;
+    color: #333;
+}
+
+.form-header p {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #777;
+}
+
+/* Form Section Styling */
+.form-section {
+    display: none;
+}
+
+.form-section-active {
+    display: block;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: border 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #1a73e8;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    min-height: 40px;
+    margin-top: 10px;
+}
+
+.skill-tag {
+    background-color: #1a73e8;
+    color: white;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.skill-tag span {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Buttons */
+.btn-next, .btn-prev, .submit-btn {
+    padding: 12px 20px;
+    border: none;
+    background-color: #1a73e8;
+    color: white;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-next:hover, .btn-prev:hover, .submit-btn:hover {
+    background-color: #fbc02d;
+}
+
+.submit-btn {
+    margin-top: 20px;
+}

@@ -15,6 +15,17 @@
 strong {
     font-weight: bold;
 }
+.hiddenProfilePic{
+    width: 40px;
+    height: 40px;
+    /* /* border-radius: 50%; */
+    /* object-fit: cover;   */
+    /* cursor: pointer; */ 
+}
+.hidden{
+    display: none;
+}
+
 
 nav{
     font-family: "Poppins", sans-serif;
@@ -30,6 +41,11 @@ nav{
     padding: 2px 30px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
     
+}
+.navbarOptions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .navbarOptions a{
     margin-left: 30px;
@@ -55,7 +71,7 @@ nav{
     padding: 5px 10px;
     text-align: center;        
     text-decoration: none;     
-    display: inline-block;     
+    /* display: inline-block;      */
     font-size: 18px;    
     font-weight: 500;       
     margin: 4px 2px;

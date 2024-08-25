@@ -1,3 +1,59 @@
+document.addEventListener('DOMContentLoaded', async function() {
+  console.log('DOM fully loaded and parsed'); // Check if DOM is ready
+
+  const userId = sessionStorage.getItem('selectedUserId');
+  if (userId) {
+      await fetchUserProfile(userId);
+  } else {
+      console.error('No user selected');
+  }
+});
+
+
+async function fetchUserProfile(userId) {
+  try {
+      const response = await fetch(`http://localhost:8080/api/user-profiles/${userId}`, {
+          method: 'GET',
+          credentials:'include',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+
+      console.log('Response:', response); // Log full response for debugging
+      if (response.ok) {
+          const profile = await response.json();
+          console.log(profile); // Log profile data
+          displayProfile(profile);
+      } else {
+          console.error('Error fetching profile:', response.status, response.statusText);
+      }
+  } catch (err) {
+      console.error('Fetch error:', err);
+  }
+}
+
+
+function displayProfile(profile) {
+
+  document.querySelector('#name').innerHTML = profile.name+` (${profile.gender})`;
+  document.querySelector('#university').innerHTML = profile.university;
+  
+  document.querySelector('#email').innerHTML = profile.email;
+  document.querySelector('#profession').innerHTML = profile.profession;
+  document.querySelector('#major').innerHTML = profile.major;
+  document.querySelector('#bio').innerHTML = profile.bio;
+
+  const skillsList = document.querySelector('.skill__list ul');
+  skillsList.innerHTML = profile.skills.map(skill => `<li>${skill}</li>`).join('');
+}
+
+
+
+
+
+
+
 (() => {
 
     'use-strict'
@@ -42,3 +98,7 @@
     themeSwiter.init()
   
   })()
+
+
+
+

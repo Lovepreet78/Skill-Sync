@@ -1,0 +1,147 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.profile-card {
+    background: linear-gradient(145deg, #e0efff, #ffffff);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #1a73e8;
+    border-radius: 15px 15px 0 0;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.profile-img img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profile-main-info {
+    margin-left: 20px;
+}
+
+.profile-main-info h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.profession {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.university {
+    font-size: 16px;
+    color: #dddddd;
+}
+
+.availability {
+    margin-top: 8px;
+    font-size: 16px;
+    color: lightgreen;
+}
+
+/* Card Style */
+.card {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    font-size: 22px;
+    color: #1a73e8;
+    margin-bottom: 10px;
+}
+
+.bio-card p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Contact Details Grid */
+.details-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+}
+
+.detail-item i {
+    color: #1a73e8;
+    margin-right: 10px;
+}
+
+/* Skills Section */
+.skills-card {
+    padding-top: 15px;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skills-list li {
+    background: #1a73e8;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    list-style: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.skills-list li:hover {
+    background: #155bb2;
+}
