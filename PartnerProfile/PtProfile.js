@@ -7,6 +7,65 @@ document.addEventListener('DOMContentLoaded', async function() {
   } else {
       console.error('No user selected');
   }
+  document.getElementById('inviteButton').addEventListener('click',()=>{
+    document.getElementById('invite-popup').style.display = 'block';
+  })
+
+  const currentLoginedUserId = sessionStorage.getItem('userid');
+
+    document.getElementById('close-btn').addEventListener('click', function() {
+        document.getElementById('invite-popup').style.display = 'none';
+    });
+
+    // Send invite when the "Send" button is clicked
+    document.getElementById('send-invite-btn').addEventListener('click', async function() {
+        const message = document.getElementById('invite-message').value;
+        const senderId = currentLoginedUserId; 
+        const sendInviteBtn = document.getElementById('send-invite-btn');
+        const receiverId = userId;
+
+        if (message.trim() === "") {
+            alert("Please enter a message.");
+            return;
+        }
+
+        if (!receiverId) {
+            alert("Receiver ID is missing.");
+            return;
+        }
+    
+        const inviteData = {
+            senderId: senderId,
+            receiverId: receiverId,
+            status: "Pending",
+            sentDate: new Date().toISOString(),
+            message: message
+        };
+    
+        try {
+            const response = await fetch('http://localhost:8080/api/invites/save', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(inviteData)
+            });
+    
+            if (response.ok) {
+                alert('Invite sent successfully!');
+                document.getElementById('invite-popup').style.display = 'none'; // Close the popup
+                
+                // Remove the receiverId attribute for security
+                sendInviteBtn.removeAttribute('data-receiver-id');
+            } else {
+                alert('Failed to send invite.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
 });
 
 

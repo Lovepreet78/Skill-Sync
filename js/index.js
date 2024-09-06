@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded',function(){
     function goToListAllUsers(){
         window.location.href = '../student Listing/list.html'
     }
+    
+    document.getElementById('invitesButton').addEventListener('click',()=>{
+            window.location.href = '../InviteNotification/inviteNotification.html'
+    })
 }
 );
 

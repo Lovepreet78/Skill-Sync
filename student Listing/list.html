@@ -11,6 +11,15 @@
         <!--  -->
         <div>Explore Talent</div>
     </header>
+     <!-- Popup container -->
+     <div id="invite-popup" class="popup-container">
+        <div class="popup-content">
+            <span class="close-btn" id="close-btn">&times;</span>
+            <h2>Send Invite</h2>
+            <textarea id="invite-message" placeholder="Enter your message"></textarea>
+            <button class="send-btn" id="send-invite-btn">Send</button>
+        </div>
+    </div>
     <div id ="profiles-container" class="allProfileContainer">
 
     
@@ -21,12 +30,9 @@
         <h6>New York</h6>
         <p>User interface designer and <br/> front-end developer</p>
         <div class="buttons">
-            <button class="primary">
+            <button class="primary" id="inviteButton">
                 Invite
             </button>
-            <!-- <button class="primary ghost">
-                Following
-            </button> -->
         </div>
         <div class="skills">
             <h6>Skills</h6>

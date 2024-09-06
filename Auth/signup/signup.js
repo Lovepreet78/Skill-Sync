@@ -22,7 +22,6 @@ async function profileAlreadyCreated(username,userid){
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
-                    
                 }
             }
 
@@ -63,7 +62,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
     try {
         const response = await fetch('http://localhost:8080/login', {
             method: 'POST',
-            credentials:'include',
+            // credentials:'include',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -74,17 +73,18 @@ document.getElementById('login-form').addEventListener('submit', async function(
             const data = await response.json();
             if (data && data.username && data.id) {
                 const result = await profileAlreadyCreated(data.username, data.id);
+                console.log(result)
                 
                 if(result === 'Exist'){
                     sessionStorage.setItem("username", data.username);
                     sessionStorage.setItem("userid", data.id);
-                    // Redirect to homepage or profile page
-                    window.location.href = '../../index.html'; // Redirect to the homepage after successful login
+
+                    window.location.href = '../../index.html';
                 } else if(result === 'Not'){
                     sessionStorage.setItem("username", data.username);
                     sessionStorage.setItem("userid", data.id);
                     // Redirect to profile registration page
-                    window.location.href = 'ProfileReg/profilereg.html'; // Redirect to profile registration page
+                    window.location.href = '../../ProfileReg/profilereg.html'; // Redirect to profile registration page
                 } else {
                     alert("Something went wrong.");
                 }
@@ -125,7 +125,7 @@ document.getElementById('signup-form').addEventListener('submit', async function
     try {
         const response = await fetch('http://localhost:8080/register', {
             method: 'POST',
-            credentials:'include',
+            // credentials:'include',
             headers: {
                 'Content-Type': 'application/json'
             },

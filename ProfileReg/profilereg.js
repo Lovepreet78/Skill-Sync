@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         fetch('http://localhost:8080/api/user-profiles/save', { 
             method: 'POST',
+            credentials:'include',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
