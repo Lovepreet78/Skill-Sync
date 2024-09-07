@@ -1,9 +1,12 @@
 async function fetchSentRequests(userId) {
+    
+    const token = localStorage.getItem("token");
     try {
         const response = await fetch(`http://localhost:8080/api/invites/sent?userId=${userId}`, {
             method: 'GET',
-            credentials: 'include',
+            
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             }
         });
@@ -33,11 +36,15 @@ async function fetchSentRequests(userId) {
 
 // Function to fetch received requests
 async function fetchReceivedRequests(userId) {
+    
+    const token = localStorage.getItem("token");
     try {
         const response = await fetch(`http://localhost:8080/api/invites/received?userId=${userId}`, {
             method: 'GET',
-            credentials: 'include',
+
             headers: {
+                
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             }
         });
@@ -66,11 +73,14 @@ async function fetchReceivedRequests(userId) {
 }
 // Helper function to fetch all profiles using the /all endpoint
 async function fetchAllProfiles() {
+    
+    const token = localStorage.getItem("token");
     try {
         const response = await fetch(`http://localhost:8080/api/user-profiles/all`, {
             method: 'GET',
-            credentials: 'include',
             headers: {
+                
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             }
         });
@@ -185,12 +195,15 @@ function displayReceivedRequests(receivedRequests) {
 // Function to send update request to Spring backend for invite status
 // Function to send update request to Spring backend for invite status
 async function updateInviteStatus(requestId, status) {
+    
+    const token = localStorage.getItem("token");
     try {
         console.log(status+" "+requestId)
         const response = await fetch(`http://localhost:8080/api/invites/update`, {
             method: 'PUT',
-            credentials: 'include',
             headers: {
+                
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({

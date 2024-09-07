@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     await fetchUserProfiles();
 
+    const token = localStorage.getItem("token");
     const currentUserId = sessionStorage.getItem('userid');
 
     document.getElementById('close-btn').addEventListener('click', function() {
@@ -37,6 +38,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
+                    
+                'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(inviteData)
@@ -81,11 +84,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 //     }
 // }
 async function fetchUserProfiles() {
+    
+    const token = localStorage.getItem("token");
     try {
         const response = await fetch('http://localhost:8080/api/user-profiles/all', {
             method: 'GET',
-            credentials: 'include',
             headers: {
+                
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });

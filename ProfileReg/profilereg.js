@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const userid = sessionStorage.getItem('userid');
 
 
+    const token = localStorage.getItem("token");
 
     const profileForm = document.getElementById('profileForm');
     const skillsInput = document.getElementById('skillsInput');
@@ -128,8 +129,8 @@ document.addEventListener('DOMContentLoaded', function () {
         
         fetch('http://localhost:8080/api/user-profiles/save', { 
             method: 'POST',
-            credentials:'include',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },

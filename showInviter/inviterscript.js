@@ -16,11 +16,13 @@ document.addEventListener('DOMContentLoaded', async function() {
   
   
   async function fetchUserProfile(userId) {
+    
+    const token = localStorage.getItem("token");
     try {
         const response = await fetch(`http://localhost:8080/api/user-profiles/${userId}`, {
             method: 'GET',
-            credentials:'include',
             headers: {
+              'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });

@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
   console.log('DOM fully loaded and parsed'); // Check if DOM is ready
+  
+  const token = localStorage.getItem("token");
 
   const userId = sessionStorage.getItem('selectedUserId');
   if (userId) {
@@ -45,8 +47,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         try {
             const response = await fetch('http://localhost:8080/api/invites/save', {
                 method: 'POST',
-                credentials: 'include',
                 headers: {
+                  'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(inviteData)
@@ -70,11 +72,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 
 async function fetchUserProfile(userId) {
+  
+  const token = localStorage.getItem("token");
   try {
       const response = await fetch(`http://localhost:8080/api/user-profiles/${userId}`, {
           method: 'GET',
-          credentials:'include',
+          
           headers: {
+            'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
           }
       });

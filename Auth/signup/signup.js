@@ -10,35 +10,32 @@ function switchForm(formType) {
         loginForm.style.display = 'block';
     }
     const loginTeller = document.getElementById('login-teller');
-    loginTeller.innerText ="";
-
+    loginTeller.innerText = "";
 }
-async function profileAlreadyCreated(username,userid){
-    try{
 
-        const response = await fetch(
-            `http://localhost:8080/api/user-profiles/${userid}`,{
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+async function profileAlreadyCreated(username, userid) {
+    const token = localStorage.getItem("token");
+    
+    try {
+        const response = await fetch(`http://localhost:8080/api/user-profiles/${userid}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             }
+        });
 
-        );
-        if(response.ok){
-            return "Exist"
+        if (response.ok) {
+            return "Exist";
+        } else if (response.status === 401) {
+            return "Error";
+        } else if (response.status === 404) {
+            return "Not";
         }
-        else if(response.status = 404){
-            return "Not";   
-        }
-        else{
-            return "Error"
-        }
-    }
-    catch(error){
+        
+    } catch (error) {
         alert("Something went wrong");
-        return
+        return;
     }
 }
 
@@ -62,35 +59,56 @@ document.getElementById('login-form').addEventListener('submit', async function(
     try {
         const response = await fetch('http://localhost:8080/login', {
             method: 'POST',
-            // credentials:'include',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             },
-            body: new URLSearchParams(loginData).toString()
+            body: toJson(loginData)
         });
         
         if (response.ok) {
             const data = await response.json();
-            if (data && data.username && data.id) {
-                const result = await profileAlreadyCreated(data.username, data.id);
-                console.log(result)
-                
-                if(result === 'Exist'){
-                    sessionStorage.setItem("username", data.username);
-                    sessionStorage.setItem("userid", data.id);
+            if (data && data.token && data.username) {
+                localStorage.setItem('token', data.token);
+                // Corrected: Pass username as a query parameter, not in the body
+                const idResponse = await fetch(`http://localhost:8080/api/userIdByUsername?username=${data.username}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${data.token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-                    window.location.href = '../../index.html';
-                } else if(result === 'Not'){
-                    sessionStorage.setItem("username", data.username);
-                    sessionStorage.setItem("userid", data.id);
-                    // Redirect to profile registration page
-                    window.location.href = '../../ProfileReg/profilereg.html'; // Redirect to profile registration page
+                if (idResponse.ok) {
+                    const id = await idResponse.json();
+
+                    if (id == null) {
+                        alert("User not found");
+                        return;
+                    }
+
+                    const result = await profileAlreadyCreated(data.username, id);
+                    console.log(result);
+                    
+                    if (result === 'Exist') {
+                        localStorage.setItem('token', data.token);  // Corrected: store the actual token
+                        localStorage.setItem("username", data.username);
+                        sessionStorage.setItem("userid", id);
+
+                        window.location.href = '../../index.html';
+                    } else if (result === 'Not') {
+                        sessionStorage.setItem("username", data.username);
+                        sessionStorage.setItem("userid", id);
+                        window.location.href = '../../ProfileReg/profilereg.html';  // Redirect to profile registration page
+                    } else {
+                        alert("Something went wrong.");
+                    }
+
                 } else {
-                    alert("Something went wrong.");
+                    alert("Failed to retrieve user ID.");
                 }
-            } else {
-                alert('Login failed: Invalid response format.');
+
             }
+            
         } else {
             loginTeller.innerText = "Wrong Credential, Try Again.";
             loginTeller.style.color = 'red';
@@ -100,8 +118,6 @@ document.getElementById('login-form').addEventListener('submit', async function(
         alert('An error occurred during login. Please try again.');
     }
 });
-
-
 
 document.getElementById('signup-form').addEventListener('submit', async function(event) {
     event.preventDefault(); 
@@ -113,10 +129,8 @@ document.getElementById('signup-form').addEventListener('submit', async function
     const signupTeller = document.getElementById('signup-teller');    
     
     if (password !== confirmPassword) {
-        // alert('Passwords do not match.');
-        signupTeller.innerText = ""
-        signupTeller.innerText = "Passwords do not match."
-        signupTeller.style.color = 'red'
+        signupTeller.innerText = "Passwords do not match.";
+        signupTeller.style.color = 'red';
         return;
     }
     
@@ -125,7 +139,6 @@ document.getElementById('signup-form').addEventListener('submit', async function
     try {
         const response = await fetch('http://localhost:8080/register', {
             method: 'POST',
-            // credentials:'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -134,14 +147,12 @@ document.getElementById('signup-form').addEventListener('submit', async function
         
         if (response.ok) {
             const data = await response.text(); 
-            alert(`Signup successful! ${data} Now Login`);
+            alert(`Signup successful! ${data}. Now Login`);
             switchForm('login');
         } else {
             const data = await response.text(); 
-            signupTeller.innerText = ""
-            signupTeller.innerText =  data;
-            signupTeller.style.color = 'red'
-            // alert('Signup failed with status ' + data);
+            signupTeller.innerText = data;
+            signupTeller.style.color = 'red';
         }
     } catch (error) {
         console.error('Error during signup:', error);
