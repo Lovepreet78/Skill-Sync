@@ -13,8 +13,21 @@ function switchForm(formType) {
     loginTeller.innerText = "";
 }
 
+function showProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'flex'; // Show circular progress bar
+}
+
+function hideProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'none'; // Hide circular progress bar
+}
+
+
+
+
 async function profileAlreadyCreated(username, userid) {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     
     try {
         const response = await fetch(`http://localhost:8080/api/user-profiles/${userid}`, {
@@ -55,7 +68,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
     const loginTeller = document.getElementById('login-teller');
     
     const loginData = { username, password };
-    
+    showProgressBar()
     try {
         const response = await fetch('http://localhost:8080/login', {
             method: 'POST',
@@ -68,7 +81,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
         if (response.ok) {
             const data = await response.json();
             if (data && data.token && data.username) {
-                localStorage.setItem('token', data.token);
+                sessionStorage.setItem('token', data.token);
                 // Corrected: Pass username as a query parameter, not in the body
                 const idResponse = await fetch(`http://localhost:8080/api/userIdByUsername?username=${data.username}`, {
                     method: 'GET',
@@ -83,45 +96,52 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
                     if (id == null) {
                         alert("User not found");
+                        hideProgressBar()
                         return;
                     }
 
                     const result = await profileAlreadyCreated(data.username, id);
                     console.log(result);
-                    
+
                     if (result === 'Exist') {
-                        localStorage.setItem('token', data.token);  // Corrected: store the actual token
-                        localStorage.setItem("username", data.username);
+                        sessionStorage.setItem("username", data.username);
                         sessionStorage.setItem("userid", id);
 
                         window.location.href = '../../index.html';
+                        console.log(data.username,data.token,id)
                     } else if (result === 'Not') {
                         sessionStorage.setItem("username", data.username);
                         sessionStorage.setItem("userid", id);
                         window.location.href = '../../ProfileReg/profilereg.html';  // Redirect to profile registration page
                     } else {
+                        hideProgressBar()
                         alert("Something went wrong.");
                     }
 
                 } else {
+                    hideProgressBar()
                     alert("Failed to retrieve user ID.");
                 }
 
             }
             
         } else {
+            hideProgressBar()
             loginTeller.innerText = "Wrong Credential, Try Again.";
             loginTeller.style.color = 'red';
         }
     } catch (error) {
+        hideProgressBar()
         console.error('Error during login:', error);
         alert('An error occurred during login. Please try again.');
+    }
+    finally {
+        hideProgressBar(); // Hide progress bar after completion
     }
 });
 
 document.getElementById('signup-form').addEventListener('submit', async function(event) {
     event.preventDefault(); 
-    
     const username = document.getElementById('signup-username').value;
     const password = document.getElementById('signup-password').value;
     const confirmPassword = document.getElementById('signup-confirm-password').value;
@@ -131,11 +151,13 @@ document.getElementById('signup-form').addEventListener('submit', async function
     if (password !== confirmPassword) {
         signupTeller.innerText = "Passwords do not match.";
         signupTeller.style.color = 'red';
+        hideProgressBar()
         return;
     }
     
     const signupData = { username, password };
     
+    showProgressBar()    
     try {
         const response = await fetch('http://localhost:8080/register', {
             method: 'POST',
@@ -154,7 +176,9 @@ document.getElementById('signup-form').addEventListener('submit', async function
             signupTeller.innerText = data;
             signupTeller.style.color = 'red';
         }
+        hideProgressBar()
     } catch (error) {
+        hideProgressBar()
         console.error('Error during signup:', error);
         alert('An error occurred during signup. Please try again.');
     }

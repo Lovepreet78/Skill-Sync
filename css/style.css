@@ -350,3 +350,10 @@ footer{
 .form-button:hover {
     background-color: #0056b3;
 }
+
+#logoutButton{
+    
+    background-color: rgb(205, 68, 68);
+
+
+}

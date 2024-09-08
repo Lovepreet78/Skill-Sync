@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const userid = sessionStorage.getItem('userid');
 
 
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     const profileForm = document.getElementById('profileForm');
     const skillsInput = document.getElementById('skillsInput');

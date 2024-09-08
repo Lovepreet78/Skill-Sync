@@ -7,11 +7,20 @@ function goToSignInPage(){
 document.addEventListener('DOMContentLoaded',function(){
     const signinButton = document.getElementById('signinButton');
     const userProfile = document.getElementById('userProfile');
-
+    const logoutButton = document.getElementById('logoutButton');
+    logoutButton.addEventListener('click',()=>{
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('userid');
+        sessionStorage.removeItem('token');
+        sessionStorage.clear();
+        window.location.href = '../Auth/signup/signup.html';
+    })
 
     const username = sessionStorage.getItem('username');
     const userid = sessionStorage.getItem('userid');
+    console.log(username,userid)
     if(username && userid){
+        logoutButton.classList.remove('hidden')
         signinButton.classList.add('hidden'); 
         userProfile.classList.remove('hidden'); 
     }

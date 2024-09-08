@@ -25,6 +25,14 @@
                     <p class="switch-form">Don't have an account? <a href="#" onclick="switchForm('signup')">Sign Up</a></p>
                 </form>
             </div>
+
+
+            <div class="circular-progress-container" id="circularProgressBarContainer" style="display: none;">
+                <div class="circular-progress" id="circularProgressBar"></div>
+            </div>
+
+            
+
             
             <!-- Signup Form -->
             <div class="form signup-form">
@@ -50,112 +58,6 @@
     </div>
     <script src="signup.js"></script>
     
-    <!-- <script>
-        function switchForm(formType) {
-            const loginForm = document.querySelector('.login-form');
-            const signupForm = document.querySelector('.signup-form');
-            
-            if (formType === 'signup') {
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'block';
-            } else {
-                signupForm.style.display = 'none';
-                loginForm.style.display = 'block';
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            switchForm('login');
-        });
-        
-        // Helper function to convert form data to x-www-form-urlencoded format
-        function toFormUrlEncoded(obj) {
-            const str = [];
-            for (const p in obj) {
-                if (obj.hasOwnProperty(p)) {
-                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                }
-            }
-            return str.join("&");
-        }
-        
-        // Handle login form submission
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            
-            const loginData = { username, password };
-            
-            fetch('http://localhost:8080/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: toFormUrlEncoded(loginData)
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Login failed with status ' + response.status);
-                }
-            })
-            .then(data => {
-                if (data && data.username && data.id) {
-                    alert(`Login successful! Username: ${data.username}, ID: ${data.id}`);
-                } else {
-                    alert('Login failed: Invalid response format.');
-                }
-            })
-            .catch(error => {
-                console.error('Error during login:', error);
-                alert('An error occurred during login. Please try again.');
-            });
-        });
-        
-        // Handle signup form submission
-        document.getElementById('signup-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-            
-            const username = document.getElementById('signup-username').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match.');
-                return;
-            }
-            
-            const signupData = { username, password };
-            
-            fetch('http://localhost:8080/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: signupData
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Signup failed with status ' + response.status);
-                }
-            })
-            .then(data => {
-                if (data && data.username && data.id) {
-                    alert(`Signup successful! Username: ${data.username}, ID: ${data.id}`);
-                } else {
-                    alert('Signup failed: Invalid response format.');
-                }
-            })
-            .catch(error => {
-                console.error('Error during signup:', error);
-                alert('An error occurred during signup. Please try again.');
-            });
-        });
-    </script> -->
+
 </body>
 </html>

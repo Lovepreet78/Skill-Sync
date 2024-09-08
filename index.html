@@ -17,9 +17,10 @@
             </div>
             <ul class="navbarOptions">
                 <a href="index.html" id="navHome">Home</a>
-                <!-- <a href="" id="navAbout">About</a> -->
-                <a href="#" id="navContact">Contact</a>
+                <!-- <a href="" id="navAbout">About</a> --> 
+                <a href="#contact" id="navContact">Contact</a>
                 <a href="#"><button class="buttonTheme1 " type="button" id = "signinButton">Sign in</button></a>
+                <a href="#"><button class="buttonTheme1 hidden" type="button" id = "logoutButton">Logout</button></a>
                 <a href="#"><img id="userProfile" class="hiddenProfilePic hidden" src="others/images/dummyProfilePic.png" alt="User" /></a>
             </ul>   
         </nav>
@@ -116,7 +117,7 @@
 
     <footer>
         
-        <div class="contact-form-container">
+        <!-- <div class="contact-form-container" id="contact">
             <div class="text-center mx-auto form-width">
                 <header class="contact-header">
                     <h2 class="contact-title">Contact Us</h2>
@@ -147,13 +148,69 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
+        <div class="contact-form-container" id="contact">
+            <div class="text-center mx-auto form-width">
+                <header class="contact-header">
+                    <h2 class="contact-title">Contact Us</h2>
+                </header>
         
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input class="form-input" type="text" name="name" id="name" placeholder="Your name" required>
+                        </div>
+        
+                        <div class="form-group">
+                            <input class="form-input" type="tel" name="phone" id="phone" placeholder="Your phone" required>
+                        </div>
+        
+                        <div class="form-group">
+                            <input class="form-input" type="text" name="subject" id="subject" placeholder="Subject" required>
+                        </div>
+        
+                        <div class="form-group">
+                            <textarea class="form-textarea" name="message" id="message" rows="5" placeholder="Message" required></textarea>
+                        </div>
+                    </div>
+        
+                    <div class="text-center">
+                        <button class="form-button" type="submit">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/8.0.9/superagent.min.js"></script>
     <script src="js/index.js"></script>
+
+
+
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get form values
+        var name = document.getElementById('name').value;
+        var phone = document.getElementById('phone').value;
+        var subject = document.getElementById('subject').value;
+        var message = document.getElementById('message').value;
+
+        // Create the mailto link
+        var mailtoLink = 'mailto:lovepreetsandhu9914@gmail.com' + 
+                         '?subject=' + encodeURIComponent(subject) + 
+                         '&body=' + encodeURIComponent('Name: ' + name + '\n' + 
+                                                        'Phone: ' + phone + '\n' + 
+                                                        'Message: ' + message);
+
+        // Open Gmail (or the default email client)
+        window.location.href = mailtoLink;
+    });
+    </script>
+
 </body>
 
 </html>

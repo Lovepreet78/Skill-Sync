@@ -1,6 +1,6 @@
 async function fetchSentRequests(userId) {
     
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
         const response = await fetch(`http://localhost:8080/api/invites/sent?userId=${userId}`, {
             method: 'GET',
@@ -37,7 +37,7 @@ async function fetchSentRequests(userId) {
 // Function to fetch received requests
 async function fetchReceivedRequests(userId) {
     
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
         const response = await fetch(`http://localhost:8080/api/invites/received?userId=${userId}`, {
             method: 'GET',
@@ -74,7 +74,7 @@ async function fetchReceivedRequests(userId) {
 // Helper function to fetch all profiles using the /all endpoint
 async function fetchAllProfiles() {
     
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
         const response = await fetch(`http://localhost:8080/api/user-profiles/all`, {
             method: 'GET',
