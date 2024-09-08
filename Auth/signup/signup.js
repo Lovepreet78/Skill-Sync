@@ -1,3 +1,12 @@
+import { BASE_URL } from '../../constant.js';
+console.log(BASE_URL)
+
+document.getElementById("signupform").addEventListener("click",function(){
+    switchForm('signup')
+})
+document.getElementById("loginform").addEventListener("click",function(){
+    switchForm('login')
+})
 function switchForm(formType) {
     const loginForm = document.querySelector('.login-form');
     const signupForm = document.querySelector('.signup-form');
@@ -30,7 +39,7 @@ async function profileAlreadyCreated(username, userid) {
     const token = sessionStorage.getItem("token");
     
     try {
-        const response = await fetch(`http://localhost:8080/api/user-profiles/${userid}`, {
+        const response = await fetch(`${BASE_URL}/api/user-profiles/${userid}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -47,7 +56,11 @@ async function profileAlreadyCreated(username, userid) {
         }
         
     } catch (error) {
-        alert("Something went wrong");
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
         return;
     }
 }
@@ -70,7 +83,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
     const loginData = { username, password };
     showProgressBar()
     try {
-        const response = await fetch('http://localhost:8080/login', {
+        const response = await fetch(`${BASE_URL}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -83,7 +96,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
             if (data && data.token && data.username) {
                 sessionStorage.setItem('token', data.token);
                 // Corrected: Pass username as a query parameter, not in the body
-                const idResponse = await fetch(`http://localhost:8080/api/userIdByUsername?username=${data.username}`, {
+                const idResponse = await fetch(`${BASE_URL}/api/userIdByUsername?username=${data.username}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${data.token}`,
@@ -95,8 +108,12 @@ document.getElementById('login-form').addEventListener('submit', async function(
                     const id = await idResponse.json();
 
                     if (id == null) {
-                        alert("User not found");
                         hideProgressBar()
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!"
+                          });
                         return;
                     }
 
@@ -115,12 +132,20 @@ document.getElementById('login-form').addEventListener('submit', async function(
                         window.location.href = '../../ProfileReg/profilereg.html';  // Redirect to profile registration page
                     } else {
                         hideProgressBar()
-                        alert("Something went wrong.");
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!"
+                          });
                     }
 
                 } else {
                     hideProgressBar()
-                    alert("Failed to retrieve user ID.");
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!"
+                      });
                 }
 
             }
@@ -133,7 +158,12 @@ document.getElementById('login-form').addEventListener('submit', async function(
     } catch (error) {
         hideProgressBar()
         console.error('Error during login:', error);
-        alert('An error occurred during login. Please try again.');
+        // alert('An error occurred during login. Please try again.');
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "An error occurred during login. Please try again."
+          });
     }
     finally {
         hideProgressBar(); // Hide progress bar after completion
@@ -159,7 +189,7 @@ document.getElementById('signup-form').addEventListener('submit', async function
     
     showProgressBar()    
     try {
-        const response = await fetch('http://localhost:8080/register', {
+        const response = await fetch(`${BASE_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -169,7 +199,15 @@ document.getElementById('signup-form').addEventListener('submit', async function
         
         if (response.ok) {
             const data = await response.text(); 
-            alert(`Signup successful! ${data}. Now Login`);
+            // alert(`Signup successful! ${data}. Now Login`);
+            // Example usage:
+            Swal.fire({
+                title: 'Signup Successful! , Now Login',
+                text: 'Your Account has been created successfully!',
+                icon: 'success',
+                confirmButtonText: 'Great',
+            });
+  
             switchForm('login');
         } else {
             const data = await response.text(); 
@@ -179,7 +217,13 @@ document.getElementById('signup-form').addEventListener('submit', async function
         hideProgressBar()
     } catch (error) {
         hideProgressBar()
-        console.error('Error during signup:', error);
-        alert('An error occurred during signup. Please try again.');
+        // console.error('Error during signup:', error);
+        // alert('An error occurred during signup. Please try again.');
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "An error occurred during login. Please try again."
+          });
+        
     }
 });

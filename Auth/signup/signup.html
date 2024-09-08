@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login/Signup</title>
     <link rel="stylesheet" href="signup.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
     <div class="container">
@@ -22,7 +24,7 @@
                     <input type="password" id="login-password" name="password" required>
                     
                     <button type="submit" id="login-btn">Login</button>
-                    <p class="switch-form">Don't have an account? <a href="#" onclick="switchForm('signup')">Sign Up</a></p>
+                    <p class="switch-form" id = "signupform">Don't have an account? <a href="#" >Sign Up</a></p>
                 </form>
             </div>
 
@@ -51,12 +53,12 @@
                     <input type="password" id="signup-confirm-password" name="confirmPassword" required>
                     
                     <button type="submit" id="signup-btn">Sign Up</button>
-                    <p class="switch-form">Already have an account? <a href="#" onclick="switchForm('login')">Login</a></p>
+                    <p class="switch-form" id="loginform">Already have an account? <a href="#" >Login</a></p>
                 </form>
             </div>
         </div>
     </div>
-    <script src="signup.js"></script>
+    <script type="module" src="signup.js"></script>
     
 
 </body>

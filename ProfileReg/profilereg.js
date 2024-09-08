@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../constant.js';
 document.addEventListener('DOMContentLoaded', function () {
 
 
@@ -127,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('FormData:', data);
 
         
-        fetch('http://localhost:8080/api/user-profiles/save', { 
+        fetch(`${BASE_URL}/api/user-profiles/save`, { 
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

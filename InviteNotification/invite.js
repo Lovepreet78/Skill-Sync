@@ -1,8 +1,9 @@
+import { BASE_URL } from '../../constant.js';
 async function fetchSentRequests(userId) {
     
     const token = sessionStorage.getItem("token");
     try {
-        const response = await fetch(`http://localhost:8080/api/invites/sent?userId=${userId}`, {
+        const response = await fetch(`${BASE_URL}/api/invites/sent?userId=${userId}`, {
             method: 'GET',
             
             headers: {
@@ -39,7 +40,7 @@ async function fetchReceivedRequests(userId) {
     
     const token = sessionStorage.getItem("token");
     try {
-        const response = await fetch(`http://localhost:8080/api/invites/received?userId=${userId}`, {
+        const response = await fetch(`${BASE_URL}/api/invites/received?userId=${userId}`, {
             method: 'GET',
 
             headers: {
@@ -76,7 +77,7 @@ async function fetchAllProfiles() {
     
     const token = sessionStorage.getItem("token");
     try {
-        const response = await fetch(`http://localhost:8080/api/user-profiles/all`, {
+        const response = await fetch(`${BASE_URL}/api/user-profiles/all`, {
             method: 'GET',
             headers: {
                 
@@ -199,7 +200,7 @@ async function updateInviteStatus(requestId, status) {
     const token = localStorage.getItem("token");
     try {
         console.log(status+" "+requestId)
-        const response = await fetch(`http://localhost:8080/api/invites/update`, {
+        const response = await fetch(`${BASE_URL}/api/invites/update`, {
             method: 'PUT',
             headers: {
                 

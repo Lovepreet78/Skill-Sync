@@ -1,8 +1,10 @@
+import { BASE_URL } from '../../constant.js';
 const signinButton = document.getElementById('signinButton');
 signinButton.onclick = goToSignInPage;
 function goToSignInPage(){
     window.location.href = '../Auth/signup/signup.html';
 }
+
 
 document.addEventListener('DOMContentLoaded',function(){
     const signinButton = document.getElementById('signinButton');
@@ -15,6 +17,7 @@ document.addEventListener('DOMContentLoaded',function(){
         sessionStorage.clear();
         window.location.href = '../Auth/signup/signup.html';
     })
+
 
     const username = sessionStorage.getItem('username');
     const userid = sessionStorage.getItem('userid');
@@ -33,6 +36,9 @@ document.addEventListener('DOMContentLoaded',function(){
     
     document.getElementById('invitesButton').addEventListener('click',()=>{
             window.location.href = '../InviteNotification/inviteNotification.html'
+    })
+    userProfile.addEventListener('click',function () {
+        window.location.href = '../UserProfile/userprofile.html'
     })
 }
 );

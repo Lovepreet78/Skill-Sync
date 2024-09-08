@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="userprofilestyle.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>User Profile</h1>
+            <button class="edit-button">Edit</button>
+
+        </div>
+        <div class="profile-card">
+            <div class="profile-pic-container">
+                <img src="default-profile.png" alt="Profile Picture" class="profile-pic" id="profile-pic">
+                <input type="file" id="upload-pic" style="display: none;" accept="image/*" onchange="updateProfilePic()">
+                <!-- <button class="change-pic-button" onclick="document.getElementById('upload-pic').click()">Change Picture</button>   -->
+            </div>
+            <div class="profile-field">
+                <label for="profile-name">Name:</label>
+                <input type="text" id="profile-name" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-email">Email:</label>
+                <input type="text" id="profile-email" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-phone">Phone:</label>
+                <input type="text" id="profile-phone" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-major">Major:</label>
+                <input type="text" id="profile-major" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-profession">Profession:</label>
+                <input type="text" id="profile-profession" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-university">University:</label>
+                <input type="text" id="profile-university" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-bio">Bio:</label>
+                <textarea id="profile-bio" rows="4" readonly></textarea>
+            </div>
+            <div class="profile-field">
+                <label for="profile-availability">Availability:</label>
+                <select id="profile-availability" disabled>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="profile-field">
+                <label for="profile-skills">Skills:</label>
+                <input type="text" id="profile-skills" readonly>
+            </div>
+            <div class="profile-field">
+                <label for="profile-gender">Gender:</label>
+                <select id="profile-gender" disabled>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="userprofilestyle.js"></script>
+</body>
+</html>

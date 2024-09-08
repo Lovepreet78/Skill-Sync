@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../constant.js';
 document.addEventListener('DOMContentLoaded', async function() {
     console.log('DOM fully loaded and parsed'); // Check if DOM is ready
   
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     const token = sessionStorage.getItem("token");
     try {
-        const response = await fetch(`http://localhost:8080/api/user-profiles/${userId}`, {
+        const response = await fetch(`${BASE_URL}/api/user-profiles/${userId}`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,

@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../constant.js';
 document.addEventListener('DOMContentLoaded', async function() {
   console.log('DOM fully loaded and parsed'); // Check if DOM is ready
   
@@ -27,12 +28,20 @@ document.addEventListener('DOMContentLoaded', async function() {
         const receiverId = userId;
 
         if (message.trim() === "") {
-            alert("Please enter a message.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please enter a message."
+          });
             return;
         }
 
         if (!receiverId) {
-            alert("Receiver ID is missing.");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
             return;
         }
     
@@ -45,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         };
     
         try {
-            const response = await fetch('http://localhost:8080/api/invites/save', {
+            const response = await fetch(`${BASE_URL}/api/invites/save`, {
                 method: 'POST',
                 headers: {
                   'Authorization': `Bearer ${token}`,
@@ -55,17 +64,30 @@ document.addEventListener('DOMContentLoaded', async function() {
             });
     
             if (response.ok) {
-                alert('Invite sent successfully!');
+              Swal.fire({
+                title: 'Done',
+                text: 'Invite sent successfully!',
+                icon: 'success',
+                confirmButtonText: 'Great',
+            });
                 document.getElementById('invite-popup').style.display = 'none'; // Close the popup
                 
                 // Remove the receiverId attribute for security
                 sendInviteBtn.removeAttribute('data-receiver-id');
             } else {
-                alert('Failed to send invite.');
+              Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!"
+              });
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!"
+            });
         }
     });
 });
@@ -75,7 +97,7 @@ async function fetchUserProfile(userId) {
   
   const token = sessionStorage.getItem("token");
   try {
-      const response = await fetch(`http://localhost:8080/api/user-profiles/${userId}`, {
+      const response = await fetch(`${BASE_URL}/api/user-profiles/${userId}`, {
           method: 'GET',
           
           headers: {
@@ -84,7 +106,7 @@ async function fetchUserProfile(userId) {
           }
       });
 
-      console.log('Response:', response); // Log full response for debugging
+      // console.log('Response:', response); // Log full response for debugging
       if (response.ok) {
           const profile = await response.json();
           console.log(profile); // Log profile data
@@ -93,7 +115,11 @@ async function fetchUserProfile(userId) {
           console.error('Error fetching profile:', response.status, response.statusText);
       }
   } catch (err) {
-      console.error('Fetch error:', err);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Something went wrong!"
+    });
   }
 }
 
