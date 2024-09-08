@@ -314,9 +314,13 @@
       font-size: 1rem;
     }
   }
+  
   .profile-page .skill__list {
     display: flex;
+    flex-direction: column;
+
     justify-content: center;
+    align-items: center;
     margin-top: 2rem;
     list-style-type: none;
     order: 3;
@@ -324,8 +328,17 @@
   }
   .profile-page .skill__list ul li{
     font-size: 1.2rem;
+    
     list-style-type:  disc;
   }
+  .profile-page .skill__list ul{
+    margin-top: 20px;
+  }
+  .skill__list h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #007bff;
+}
 
 
   @media (max-width: 990px) {
