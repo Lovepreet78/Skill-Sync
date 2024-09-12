@@ -171,7 +171,25 @@ function displaySentRequests(sentRequests) {
         button.addEventListener('click', (event) => {
             event.stopPropagation(); // Prevent triggering the card click event
             const inviteId = button.getAttribute('data-id');
-            deleteInvite(inviteId);
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    deleteInvite(inviteId);
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });
+                }
+              });
         });
     });
 }
@@ -318,8 +336,25 @@ function displayReceivedRequests(receivedRequests) {
         button.addEventListener('click', (event) => {
             event.stopPropagation(); // Prevent triggering the card click event
             const inviteId = button.getAttribute('data-id');
-            console.log("cloicl")
-            deleteInvite(inviteId);
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteInvite(inviteId);
+                  Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                  });
+                }
+              });
+            
         });
     });
 }
