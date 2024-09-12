@@ -173,3 +173,31 @@ h3 {
         margin-top: 20px;
     }
 }
+
+
+
+
+.delete-button {
+    background-color: #ba2211; /* Red background */
+    color: white;             /* White text */
+    border: none;             /* No border */
+    border-radius: 4px;       /* Rounded corners */
+    padding: 10px 20px;       /* Spacing inside the button */
+    cursor: pointer;          /* Pointer cursor on hover */
+    display: flex;            /* Flex container for alignment */
+    align-items: center;      /* Center items vertically */
+  }
+  
+
+  
+  .delete-button:hover {
+    background-color: #6e0f04; /* Darker red on hover */
+  }
+  
+  .buttons{
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+

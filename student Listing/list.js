@@ -42,11 +42,10 @@ document.addEventListener('DOMContentLoaded', async function() {
             sentDate: new Date().toISOString(),
             message: message
         };
-    
+        console.log(inviteData)
         try {
             const response = await fetch(`${BASE_URL}/api/invites/save`, {
                 method: 'POST',
-                credentials: 'include',
                 headers: {
                     
                 'Authorization': `Bearer ${token}`,
