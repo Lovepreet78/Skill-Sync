@@ -1,10 +1,13 @@
 import { BASE_URL } from '../../constant.js';
+
 document.addEventListener('DOMContentLoaded', async function() {
+    
     await fetchUserProfiles();
 
     const token = sessionStorage.getItem("token");
     const currentUserId = sessionStorage.getItem('userid');
 
+    // Close the popup when the close button is clicked
     document.getElementById('close-btn').addEventListener('click', function() {
         document.getElementById('invite-popup').style.display = 'none';
     });
@@ -13,16 +16,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.getElementById('send-invite-btn').addEventListener('click', async function() {
         const message = document.getElementById('invite-message').value;
         const senderId = currentUserId; 
-        const sendInviteBtn = document.getElementById('send-invite-btn');
-        const receiverId = sendInviteBtn.getAttribute('data-receiver-id'); // Get receiverId from button
+        const receiverId = this.getAttribute('data-receiver-id'); // Get receiverId from button
 
         if (message.trim() === "") {
-            // alert("Please enter a message.");
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Please enter a message."
-              });
+            });
             return;
         }
 
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!"
-              });
+            });
             return;
         }
     
@@ -42,13 +43,13 @@ document.addEventListener('DOMContentLoaded', async function() {
             sentDate: new Date().toISOString(),
             message: message
         };
-        console.log(inviteData)
+
         try {
+            showProgressBar(); // Show progress bar when sending invite
             const response = await fetch(`${BASE_URL}/api/invites/save`, {
                 method: 'POST',
                 headers: {
-                    
-                'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(inviteData)
@@ -64,14 +65,13 @@ document.addEventListener('DOMContentLoaded', async function() {
                 document.getElementById('invite-popup').style.display = 'none'; // Close the popup
                 
                 // Remove the receiverId attribute for security
-                sendInviteBtn.removeAttribute('data-receiver-id');
+                document.getElementById('send-invite-btn').removeAttribute('data-receiver-id');
             } else {
-                // alert('Failed to send invite.');
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Failed to send invite."
-                  });
+                });
             }
         } catch (error) {
             console.error('Error:', error);
@@ -79,41 +79,33 @@ document.addEventListener('DOMContentLoaded', async function() {
                 icon: "error",
                 title: "Oops...",
                 text: "Something went wrong!"
-              });
+            });
+        } finally {
+            hideProgressBar(); // Hide progress bar when done
+        }
+    });
+
+    // Add event listener for search functionality
+    document.getElementById('search-btn').addEventListener('click', function() {
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        searchProfiles(searchTerm);
+    });
+
+    document.getElementById('search-input').addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            const searchTerm = event.target.value.toLowerCase();
+            searchProfiles(searchTerm);
         }
     });
 });
 
-// async function fetchUserProfiles() {
-//     try {
-//         const response = await fetch('http://localhost:8080/api/user-profiles/all', {
-//             method: 'GET',
-//             credentials: 'include',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-
-//         if (response.ok) {
-//             const data = await response.json();
-//             const currentUserId = sessionStorage.getItem('userid');
-//             const filteredProfiles = data.filter(profile => profile.id !== parseInt(currentUserId, 10));
-//             displayData(filteredProfiles);
-//         } else {
-//             console.error('Server returned an error:', response.statusText);
-//         }
-//     } catch (err) {
-//         console.error('Error fetching profiles:', err);
-//     }
-// }
 async function fetchUserProfiles() {
-    
     const token = sessionStorage.getItem("token");
     try {
+        showProgressBar(); // Show progress bar when fetching profiles
         const response = await fetch(`${BASE_URL}/api/user-profiles/all`, {
             method: 'GET',
             headers: {
-                
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
@@ -124,25 +116,28 @@ async function fetchUserProfiles() {
             return;
         }
 
-        // Check response content type
         const contentType = response.headers.get('Content-Type');
         if (contentType && contentType.includes('application/json')) {
             const data = await response.json();
             const currentUserId = sessionStorage.getItem('userid');
             const filteredProfiles = data.filter(profile => profile.id !== parseInt(currentUserId, 10));
             displayData(filteredProfiles);
+            sessionStorage.setItem('allProfiles', JSON.stringify(filteredProfiles)); // Store profiles for search
         } else {
-            const text = await response.text(); // Read response as text
+            const text = await response.text();
             console.error('Expected JSON, but received:', text);
         }
     } catch (err) {
         console.error('Error fetching profiles:', err);
+    } finally {
+        hideProgressBar(); // Hide progress bar when done
     }
 }
 
+// Function to display profiles
 function displayData(profiles) {
     const container = document.getElementById('profiles-container');
-    container.innerHTML = ''; 
+    container.innerHTML = '';
 
     profiles.forEach(profile => {
         const card = document.createElement('div');
@@ -186,4 +181,28 @@ function displayData(profiles) {
             window.location.href = '../PartnerProfile/PtProfile.html'; 
         });
     });
+}
+
+// Search function to filter profiles by name or skills
+function searchProfiles(searchTerm) {
+    showProgressBar(); // Show progress bar when searching profiles
+    const allProfiles = JSON.parse(sessionStorage.getItem('allProfiles')) || [];
+    const filteredProfiles = allProfiles.filter(profile => {
+        const nameMatch = profile.name.toLowerCase().includes(searchTerm);
+        const skillMatch = profile.skills.some(skill => skill.toLowerCase().includes(searchTerm));
+        return nameMatch || skillMatch;
+    });
+
+    displayData(filteredProfiles);
+    hideProgressBar(); // Hide progress bar when search is complete
+}
+
+function showProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'flex'; // Show circular progress bar
+}
+
+function hideProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'none'; // Hide circular progress bar
 }

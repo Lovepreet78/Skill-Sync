@@ -13,7 +13,16 @@
         <!--  -->
         <div>Explore Talent</div>
     </header>
+    <div class="circular-progress-container" id="circularProgressBarContainer" style="display: none;">
+        <div class="circular-progress" id="circularProgressBar"></div>
+    </div>
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search by name or skills...">
+        <button id="search-btn">Search</button>
+    </div>
+    
      <!-- Popup container -->
+
      <div id="invite-popup" class="popup-container">
         <div class="popup-content">
             <span class="close-btn" id="close-btn">&times;</span>
@@ -22,35 +31,39 @@
             <button class="send-btn" id="send-invite-btn">Send</button>
         </div>
     </div>
+
+    <div class="cardAndSearchContainer">
     <div id ="profiles-container" class="allProfileContainer">
 
     
-    <div class="card-container">
-        <!-- <span class="pro">PRO</span> -->
-        <img class="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
-        <h3>Ricky Park</h3>
-        <h6>New York</h6>
-        <p>User interface designer and <br/> front-end developer</p>
-        <div class="buttons">
-            <button class="primary" id="inviteButton">
-                Invite
-            </button>
-        </div>
-        <div class="skills">
-            <h6>Skills</h6>
-            <ul>
-                <li>UI / UX</li>
-                <li>Front End Development</li>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Node</li>
-            </ul>
-        </div>
+        <!-- <div class="card-container">
+            <img class="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
+            <h3>Ricky Park</h3>
+            <h6>New York</h6>
+            <p>User interface designer and <br/> front-end developer</p>
+            <div class="buttons">
+                <button class="primary" id="inviteButton">
+                    Invite
+                </button>
+            </div>
+            <div class="skills">
+                <h6>Skills</h6>
+                <ul>
+                    <li>UI / UX</li>
+                    <li>Front End Development</li>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>React</li>
+                    <li>Node</li>
+                </ul>
+            </div>
+        </div> -->
+        
     </div>
     
-    </div>
+    
+</div>
     <footer>
         
     </footer>
