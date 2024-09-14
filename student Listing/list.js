@@ -144,7 +144,7 @@ function displayData(profiles) {
         card.className = 'card-container';
 
         card.innerHTML = `
-            <img class="round" src="https://randomuser.me/api/portraits/women/79.jpg" alt="user" />
+            <img class="round" src="../others/images/profile.png" alt="user" />
             <h3>${profile.name}</h3>
             <h6>${profile.university}</h6>
             <p>${profile.profession}</p>
