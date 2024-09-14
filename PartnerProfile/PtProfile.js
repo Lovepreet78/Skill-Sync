@@ -94,9 +94,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 
 async function fetchUserProfile(userId) {
-  
   const token = sessionStorage.getItem("token");
   try {
+    showProgressBar()
       const response = await fetch(`${BASE_URL}/api/user-profiles/${userId}`, {
           method: 'GET',
           
@@ -114,13 +114,16 @@ async function fetchUserProfile(userId) {
       } else {
           console.error('Error fetching profile:', response.status, response.statusText);
       }
-  } catch (err) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Something went wrong!"
-    });
-  }
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!"
+      });
+    }
+    finally{
+      hideProgressBar()
+    }
 }
 
 
@@ -189,6 +192,15 @@ function displayProfile(profile) {
   
   })()
 
+  function showProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'flex'; // Show circular progress bar
+}
+
+function hideProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'none'; // Hide circular progress bar
+}
 
 
 

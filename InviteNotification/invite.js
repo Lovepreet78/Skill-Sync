@@ -3,6 +3,7 @@ async function fetchSentRequests(userId) {
     
     const token = sessionStorage.getItem("token");
     try {
+        showProgressBar()
         const response = await fetch(`${BASE_URL}/api/invites/sent?userId=${userId}`, {
             method: 'GET',
             
@@ -33,6 +34,9 @@ async function fetchSentRequests(userId) {
     } catch (error) {
         console.error("Error fetching sent requests:", error);
     }
+    finally{
+        hideProgressBar()
+    }
 }
 
 // Function to fetch received requests
@@ -40,6 +44,7 @@ async function fetchReceivedRequests(userId) {
     
     const token = sessionStorage.getItem("token");
     try {
+        showProgressBar()
         const response = await fetch(`${BASE_URL}/api/invites/received?userId=${userId}`, {
             method: 'GET',
 
@@ -70,6 +75,9 @@ async function fetchReceivedRequests(userId) {
         displayReceivedRequests(requestsWithProfiles);
     } catch (error) {
         console.error("Error fetching received requests:", error);
+    }
+    finally{
+        hideProgressBar()
     }
 }
 // Helper function to fetch all profiles using the /all endpoint
@@ -181,8 +189,9 @@ function displaySentRequests(sentRequests) {
                 confirmButtonText: "Yes, delete it!"
               }).then((result) => {
                 if (result.isConfirmed) {
-                    
+                    showProgressBar()
                     deleteInvite(inviteId);
+                    hideProgressBar()
                   Swal.fire({
                     title: "Deleted!",
                     text: "Your file has been deleted.",
@@ -362,6 +371,7 @@ function displayReceivedRequests(receivedRequests) {
 async function deleteInvite(inviteId) {
     const token = sessionStorage.getItem("token");
     try {
+        // showProgressBar()
         const response = await fetch(`${BASE_URL}/api/invites/delete`, {
             method: 'DELETE',
             headers: {
@@ -382,6 +392,9 @@ async function deleteInvite(inviteId) {
         }
     } catch (error) {
         console.error("Error deleting invite:", error);
+    }
+    finally{
+        // hideProgressBar()
     }
 }
 
@@ -415,11 +428,21 @@ async function updateInviteStatus(requestId, status) {
         console.error("Error updating invite status:", error);
     }
 }
+function showProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'flex'; // Show circular progress bar
+}
+
+function hideProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'none'; // Hide circular progress bar
+}
 
 
 // Fetch both sent and received requests on page load
 const userId = sessionStorage.getItem('userid');
 fetchSentRequests(userId);
+
 fetchReceivedRequests(userId);
 
 
