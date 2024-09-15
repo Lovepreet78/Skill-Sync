@@ -91,79 +91,130 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     showSection(currentSection);
-
-
     profileForm.addEventListener('submit', function (e) {
-        e.preventDefault(); 
+        e.preventDefault(); // Prevent the default form submission
 
-
+        // Create FormData to send both profile and image
         const formData = new FormData();
-        formData.append('name', document.getElementById('name').value);
-        formData.append('email', document.getElementById('email').value);
-        formData.append('phone', document.getElementById('phone').value);
-        formData.append('username', username);
-        formData.append('major', document.getElementById('major').value);
-        formData.append('profession', document.getElementById('profession').value);
-        formData.append('university', document.getElementById('university').value);
-        formData.append('bio', document.getElementById('bio').value);
-        formData.append('skills', JSON.stringify(skillsArray)); 
-        formData.append('isAvailableToJoin', document.getElementById('availability').value === 'true'); 
-        formData.append('gender', document.getElementById('gender').value);
-        
-        
+ 
+        // Append user profile data to the FormData
+        formData.append('userProfile', new Blob([JSON.stringify({
+            id: userid,
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            username: username,
+            major: document.getElementById('major').value,
+            profession: document.getElementById('profession').value,
+            university: document.getElementById('university').value,
+            bio: document.getElementById('bio').value,
+            skills: skillsArray, // Directly passing the skills array
+            isAvailableToJoin: document.getElementById('availability').value === 'true',
+            gender: document.getElementById('gender').value
+        })], { type: 'application/json' }));
+
+        // Append the profile image if the user uploaded one
         const profilePicInput = document.getElementById('profilePic');
         if (profilePicInput.files.length > 0) {
-            formData.append('profilePic', profilePicInput.files[0]);
+            formData.append('profileImage', profilePicInput.files[0]); // Attach image
         }
-        let isAvailableToJoinSend ;
-        if(document.getElementById('availability').value === 'true') isAvailableToJoinSend = true
-        else isAvailableToJoinSend = false
 
-
-        const data = {};
-        data['id'] = 23;
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
-        console.log('FormData:', data);
-
-        
-        fetch(`${BASE_URL}/api/user-profiles/save`, { 
+        // Send the form data with Fetch API
+        fetch(`${BASE_URL}/api/user-profiles/save`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, // Pass token for authorization
             },
-            body: JSON.stringify({
-                id: userid,
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                username: username,
-                major: document.getElementById('major').value,
-                profession: document.getElementById('profession').value,
-                university: document.getElementById('university').value,
-                bio: document.getElementById('bio').value,
-                skills: skillsArray, // Directly using the array
-                isAvailableToJoin:isAvailableToJoinSend, // Convert to boolean
-                gender: document.getElementById('gender').value
-            })
+            body: formData // Use formData, so no need for JSON.stringify
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = "../index.html"
+                window.location.href = "../index.html"; // Redirect on success
                 return response.json();
             }
             throw new Error('Something went wrong.');
         })
         .then(data => {
             console.log('Success:', data);
-            // alert("Profile submitted successfully!");
+            // Optionally display success message or handle data
         })
         .catch((error) => {
             console.error('Error:', error);
             alert("There was an error submitting your profile.");
         });
     });
+
+    // profileForm.addEventListener('submit', function (e) {
+    //     e.preventDefault(); 
+
+
+    //     const formData = new FormData();
+    //     formData.append('name', document.getElementById('name').value);
+    //     formData.append('email', document.getElementById('email').value);
+    //     formData.append('phone', document.getElementById('phone').value);
+    //     formData.append('username', username);
+    //     formData.append('major', document.getElementById('major').value);
+    //     formData.append('profession', document.getElementById('profession').value);
+    //     formData.append('university', document.getElementById('university').value);
+    //     formData.append('bio', document.getElementById('bio').value);
+    //     formData.append('skills', JSON.stringify(skillsArray)); 
+    //     formData.append('isAvailableToJoin', document.getElementById('availability').value === 'true'); 
+    //     formData.append('gender', document.getElementById('gender').value);
+        
+        
+    //     const profilePicInput = document.getElementById('profilePic');
+    //     if (profilePicInput.files.length > 0) {
+    //         formData.append('profilePic', profilePicInput.files[0]);
+    //     }
+    //     let isAvailableToJoinSend ;
+    //     if(document.getElementById('availability').value === 'true') isAvailableToJoinSend = true
+    //     else isAvailableToJoinSend = false
+
+
+    //     const data = {};
+    //     data['id'] = 23;
+    //     formData.forEach((value, key) => {
+    //         data[key] = value;
+    //     });
+    //     console.log('FormData:', data);
+
+        
+    //     fetch(`${BASE_URL}/api/user-profiles/save`, { 
+    //         method: 'POST',
+    //         headers: {
+    //             'Authorization': `Bearer ${token}`,
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({
+    //             id: userid,
+    //             name: document.getElementById('name').value,
+    //             email: document.getElementById('email').value,
+    //             phone: document.getElementById('phone').value,
+    //             username: username,
+    //             major: document.getElementById('major').value,
+    //             profession: document.getElementById('profession').value,
+    //             university: document.getElementById('university').value,
+    //             bio: document.getElementById('bio').value,
+    //             skills: skillsArray, // Directly using the array
+    //             isAvailableToJoin:isAvailableToJoinSend, // Convert to boolean
+    //             gender: document.getElementById('gender').value
+    //         })
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             window.location.href = "../index.html"
+    //             return response.json();
+    //         }
+    //         throw new Error('Something went wrong.');
+    //     })
+    //     .then(data => {
+    //         console.log('Success:', data);
+    //         // alert("Profile submitted successfully!");
+    //     })
+    //     .catch((error) => {
+    //         console.error('Error:', error);
+    //         alert("There was an error submitting your profile.");
+    //     });
+    // });
 });
