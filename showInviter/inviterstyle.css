@@ -732,4 +732,27 @@
   .send-btn:hover {
     background-color: #45a049;
   }
-  
+  .circular-progress-container {
+    position: fixed; /* Ensure it stays at the same position when scrolling */
+    top: 50%; /* Move to the middle of the viewport */
+    left: 50%; /* Move to the middle of the viewport */
+    transform: translate(-50%, -50%); /* Center it perfectly */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it is above other elements */
+}
+
+.circular-progress {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #f3f3f3; /* Light grey background */
+    border-top: 6px solid #4caf50; /* Green color for the progress */
+    border-radius: 50%;
+    animation: spin 1s linear infinite; /* Continuous spinning */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -15,11 +15,22 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   });
   
+function showProgressBar() {
+  const progressBarContainer = document.getElementById('circularProgressBarContainer');
+  progressBarContainer.style.display = 'flex'; // Show circular progress bar
+}
+
+function hideProgressBar() {
+  const progressBarContainer = document.getElementById('circularProgressBarContainer');
+  progressBarContainer.style.display = 'none'; // Hide circular progress bar
+}
+
   
   async function fetchUserProfile(userId) {
     
     const token = sessionStorage.getItem("token");
     try {
+      showProgressBar()
         const response = await fetch(`${BASE_URL}/api/user-profiles/${userId}`, {
             method: 'GET',
             headers: {
@@ -38,6 +49,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     } catch (err) {
         console.error('Fetch error:', err);
+    }
+    finally{
+      hideProgressBar()
     }
   }
   
