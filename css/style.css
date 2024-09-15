@@ -11,6 +11,10 @@
     #navHome,#navAbout,#navContact {
         display: none;
     }
+    .desc{
+        display: none;
+    }
+    
 }
 strong {
     font-weight: bold;
