@@ -57,7 +57,11 @@ function hideProgressBar() {
   
   
   function displayProfile(profile) {
-  
+    let pimageUrl = profile.imageUrl;
+    if(pimageUrl=="" || pimageUrl===null){
+        pimageUrl = "../others/images/profile.png";
+    }
+    document.querySelector('.content__avatar').style.backgroundImage = `url(${pimageUrl})`;
     document.querySelector('#name').innerHTML = profile.name+` (${profile.gender})`;
     document.querySelector('#university').innerHTML = "University : "+profile.university;
     document.querySelector('#email').innerHTML = "Email : "+profile.email;

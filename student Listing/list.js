@@ -142,9 +142,12 @@ function displayData(profiles) {
     profiles.forEach(profile => {
         const card = document.createElement('div');
         card.className = 'card-container';
-
+        let pimageUrl = profile.imageUrl;
+        if(pimageUrl=="" || pimageUrl===null){
+            pimageUrl = "../others/images/profile.png";
+        }
         card.innerHTML = `
-            <img class="round" src="../others/images/profile.png" alt="user" />
+            <img class="round" src=${pimageUrl} alt="user" />
             <h3>${profile.name}</h3>
             <h6>${profile.university}</h6>
             <p>${profile.profession}</p>

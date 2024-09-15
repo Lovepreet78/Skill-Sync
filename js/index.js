@@ -4,9 +4,40 @@ signinButton.onclick = goToSignInPage;
 function goToSignInPage(){
     window.location.href = '../Auth/signup/signup.html';
 }
+async function fetchCurrentUser(userid) {
+    const token = sessionStorage.getItem("token");
+    
+    try {
+        const response = await fetch(`${BASE_URL}/api/user-profiles/${userid}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            return response.json()
+        } else{
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!"
+              });
+        }
+        
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!"
+          });
+        return;
+    }
+}
 
 
-document.addEventListener('DOMContentLoaded',function(){
+document.addEventListener('DOMContentLoaded',async function(){
     const signinButton = document.getElementById('signinButton');
     const userProfile = document.getElementById('userProfile');
     const logoutButton = document.getElementById('logoutButton');
@@ -17,8 +48,10 @@ document.addEventListener('DOMContentLoaded',function(){
         sessionStorage.clear();
         window.location.href = '../Auth/signup/signup.html';
     })
+    
+    
 
-
+    
     const username = sessionStorage.getItem('username');
     const userid = sessionStorage.getItem('userid');
     console.log(username,userid)
@@ -26,6 +59,14 @@ document.addEventListener('DOMContentLoaded',function(){
         logoutButton.classList.remove('hidden')
         signinButton.classList.add('hidden'); 
         userProfile.classList.remove('hidden'); 
+    }
+    const currentUser  = await fetchCurrentUser(userid)
+    if(currentUser){
+        console.log(currentUser)
+        if(currentUser.imageUrl)
+        {
+            userProfile.src  = currentUser.imageUrl
+        }
     }
 
     const introImageFindTeammatesButton = document.getElementById('introImageFindTeammatesButton');

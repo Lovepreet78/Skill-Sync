@@ -133,7 +133,7 @@
   }
   .profile-page .content__avatar {
     width: 12rem;
-    height: 12rem;
+    height: 12rem; 
     position: absolute;
     bottom: 0;
     left: 50%;
