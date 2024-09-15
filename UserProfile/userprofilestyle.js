@@ -1,5 +1,15 @@
 import { BASE_URL } from '../../constant.js';
 
+function showProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'flex'; // Show circular progress bar
+}
+
+function hideProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'none'; // Hide circular progress bar
+}
+
 async function fetchUserProfile() {
     const userId = sessionStorage.getItem('userid'); // Assuming user ID is stored in sessionStorage
     if (!userId) {
@@ -12,6 +22,7 @@ async function fetchUserProfile() {
     }
 
     try {
+        showProgressBar()
         const token = sessionStorage.getItem('token');
         const response = await fetch(`${BASE_URL}/api/user-profiles/${userId}`, {
             method: 'GET',
@@ -38,6 +49,9 @@ async function fetchUserProfile() {
             title: "Oops...",
             text: "Something went wrong!"
           });
+    }
+    finally{
+        hideProgressBar()
     }
 }
 
@@ -83,6 +97,7 @@ async function toggleEditMode() {
         };
 
         try {
+            showProgressBar()
             const token = sessionStorage.getItem('token');
             const response = await fetch(`${BASE_URL}/api/user-profiles/save`, {
                 method: 'POST',
@@ -122,6 +137,9 @@ async function toggleEditMode() {
                 title: "Oops...",
                 text: "An error occurred while updating the profile. Please try again."
               });
+        }
+        finally{
+            hideProgressBar()
         }
     }
 }

@@ -192,11 +192,11 @@ function displaySentRequests(sentRequests) {
                     showProgressBar()
                     deleteInvite(inviteId);
                     hideProgressBar()
-                  Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                  });
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
                 }
               });
         });
