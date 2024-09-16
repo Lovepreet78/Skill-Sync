@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('profileImage', profilePicInput.files[0]); // Attach image
         }
 
+        showProgressBar()
         // Send the form data with Fetch API
         fetch(`${BASE_URL}/api/user-profiles/save`, {
             method: 'POST',
@@ -142,6 +143,9 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
             alert("There was an error submitting your profile.");
         });
+        hideProgressBar()
+
+        
     });
 
     // profileForm.addEventListener('submit', function (e) {
@@ -218,3 +222,12 @@ document.addEventListener('DOMContentLoaded', function () {
     //     });
     // });
 });
+function showProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'flex'; // Show circular progress bar
+  }
+  
+  function hideProgressBar() {
+    const progressBarContainer = document.getElementById('circularProgressBarContainer');
+    progressBarContainer.style.display = 'none'; // Hide circular progress bar
+  }
